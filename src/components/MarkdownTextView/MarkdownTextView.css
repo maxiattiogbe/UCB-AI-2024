@@ -1,0 +1,96 @@
+.markdown-view p {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    line-height: 1.4;
+}
+
+.markdown-view.inline p {
+    margin-top: 0;
+}
+
+.markdown-view p:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+.markdown-view a:link {
+    color: var(--link-active);
+}
+
+.markdown-view a:visited {
+    color: var(--link-visited);
+}
+
+.markdown-view > ul {
+    padding-inline-start: 20px;
+}
+
+.markdown-view li ul {
+    padding-inline-start: 20px;
+}
+
+.markdown-view li {
+    margin: 0px;
+    margin-bottom: 5px;
+    /* font-size: 13.5px; */
+    line-height: 1.4;
+}
+
+.markdown-view pre {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.inline-code {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #d0d0d060;
+    padding: 1px 4px;
+    font-size: 90%;
+    color: #576cb1;
+    margin: 0px 1px;
+}
+
+pre > .inline-code {
+    display: block;
+    border-radius: 6px;
+    padding: 5px 6px;
+    color: #4c70a5;
+    margin: 5px 0px;
+}
+
+.markdown-view blockquote {
+    margin: 10px 20px;
+    border-left: 5px solid #bec3f7;
+    padding: 2px 12px;
+    font-style: italic;
+    background-color: #f4f4ff;
+    border-radius: 3px;
+}
+
+.markdown-view h2 {
+  margin-bottom: 18px;
+}
+
+.markdown-view h3 {
+  margin: 25px 0px 15px;
+}
+
+.markdown-view h4 {
+  margin: 20px 0px 10px;
+}
+
+.markdown-view table {
+    margin: 12px auto;
+}
+
+.markdown-view table td, .markdown-view table th {
+    padding: 3px 6px;
+}
+
+.markdown-view table {
+    border-collapse: collapse;
+}
+
+.markdown-view thead {
+    border-bottom: 1px solid #c0c0c0;
+}
