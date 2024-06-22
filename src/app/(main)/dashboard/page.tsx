@@ -1,6 +1,10 @@
 import React from "react";
+import { currentUser } from "@clerk/nextjs/server";
 
-function Dashboard() {
+async function Dashboard() {
+  const user = await currentUser();
+  console.log(user);
+
   return <div>Dashboard</div>;
 }
 
