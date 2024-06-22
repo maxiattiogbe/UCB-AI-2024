@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/theme";
 import SnackbarProvider from "src/components/snackbar/snackbar-provider";
+import { SettingsProvider } from "@/components/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>
-            <SnackbarProvider>{children}</SnackbarProvider>
-        </ThemeProvider>
+        <SettingsProvider
+          defaultSettings={{
+            themeMode: "light", // 'light' | 'dark'
+            themeDirection: "ltr", //  'rtl' | 'ltr'
+            themeContrast: "default", // 'default' | 'bold'
+            themeLayout: "horizontal", // 'vertical' | 'horizontal' | 'mini'
+            themeColorPresets: "blue", // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+            themeStretch: false,
+          }}
+        >
+          <ThemeProvider>
+              <SnackbarProvider>{children}</SnackbarProvider>
+          </ThemeProvider>
+        </SettingsProvider>
       </body>
     </html>
   );
