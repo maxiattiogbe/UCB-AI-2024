@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -9,8 +9,10 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const navigation = [
   //   { name: "Product", href: "#" },
@@ -21,6 +23,15 @@ const navigation = [
 
 export default function Home() {
   //   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { isSignedIn, isLoaded } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   return (
     <div className="bg-gray-900">
