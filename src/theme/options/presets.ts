@@ -7,7 +7,8 @@ import { grey, primary } from '../palette';
 type PresetType = 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red';
 
 export function createPresets(preset: PresetType) {
-  const primaryColor = getPrimary(preset ?? 'default');
+  const primaryColor = getPrimary(preset);
+
   const theme = {
     palette: {
       primary: primaryColor,

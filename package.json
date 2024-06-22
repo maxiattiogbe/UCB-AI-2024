@@ -15,12 +15,18 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.20",
     "lodash": "^4.17.21",
+    "mapbox-gl": "^3.4.0",
     "next": "14.2.4",
     "notistack": "^3.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-lazy-load-image-component": "^1.6.2",
+    "react-quill": "^2.0.0",
     "simplebar-react": "^3.2.6",
-    "stylis-plugin-rtl": "^2.1.1"
+    "slick-carousel": "^1.8.1",
+    "stylis-plugin-rtl": "^2.1.1",
+    "tailwindcss-animate": "^1.0.7",
+    "yet-another-react-lightbox": "^3.20.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.5",

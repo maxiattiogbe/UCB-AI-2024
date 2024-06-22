@@ -1,33 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* scrollbar */
+@import "simplebar-react/dist/simplebar.min.css";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/* lazy image */
+@import "react-lazy-load-image-component/src/effects/blur.css";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+/* map */
+@import "mapbox-gl/dist/mapbox-gl.css";
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/* editor */
+@import "react-quill/dist/quill.snow.css";
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* carousel */
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* lightbox */
+@import "yet-another-react-lightbox/styles.css";
+@import "yet-another-react-lightbox/plugins/captions.css";
+@import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+.center-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

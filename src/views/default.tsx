@@ -1,7 +1,7 @@
 'use client';
 
 import { useBoolean } from "@/hooks/use-boolean";
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import Image from "next/image";
 
 export default function DefaultPage() {
@@ -10,8 +10,11 @@ export default function DefaultPage() {
     <Dialog open={isDialogOpened.value} fullWidth maxWidth="sm">
       <DialogTitle>Test dialog</DialogTitle>
       <DialogContent>
-        <Button onClick={isDialogOpened.onFalse}>Example button</Button>
       </DialogContent>
+      <DialogActions>
+        <Button>Cancel</Button>
+        <Button color="primary" variant="soft" onClick={isDialogOpened.onFalse}>Example button</Button>
+      </DialogActions>
     </Dialog>
   </main>
 }

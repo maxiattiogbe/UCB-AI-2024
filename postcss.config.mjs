@@ -2,6 +2,8 @@
 const config = {
   plugins: {
     tailwindcss: {},
+    // Autoprefixer: PostCSS plugin to parse CSS and add vendor prefixes to CSS rules
+    autoprefixer: {},
   },
 };
 

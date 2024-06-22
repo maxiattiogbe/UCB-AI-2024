@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import ThemeProvider from "@/theme";
+import "src/global.css";
+
+import ThemeProvider from "src/theme";
+import { primaryFont } from "src/theme/typography";
 import SnackbarProvider from "src/components/snackbar/snackbar-provider";
 import { SettingsProvider } from "@/components/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Training Simulator",
-  description: "Training scenarios powered by generative AI",
+  title: "Peer Program",
+  description: "AI-facilitated collaborative learning for computer science",
 };
 
 export default function RootLayout({
@@ -20,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {" "}
         <SettingsProvider
           defaultSettings={{
             themeMode: "light", // 'light' | 'dark'
@@ -31,7 +34,7 @@ export default function RootLayout({
           }}
         >
           <ThemeProvider>
-              <SnackbarProvider>{children}</SnackbarProvider>
+            <SnackbarProvider>{children}</SnackbarProvider>
           </ThemeProvider>
         </SettingsProvider>
       </body>
