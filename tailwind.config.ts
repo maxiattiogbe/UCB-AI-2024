@@ -19,8 +19,6 @@ const config = {
     },
     extend: {
       colors: {
-        customBGColor01:'#F8F8F8',
-        customBGColor02:'#F0F0F0',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
