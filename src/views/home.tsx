@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -9,8 +9,10 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const navigation = [
   //   { name: "Product", href: "#" },
@@ -20,7 +22,16 @@ const navigation = [
 ];
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  //   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { isSignedIn, isLoaded } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   return (
     <div className="bg-gray-900">
@@ -39,16 +50,15 @@ export default function Home() {
               /> */}
             </a>
           </div>
-          <div className="flex lg:hidden">
+          {/* <div className="flex lg:hidden">
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
-              {/* <Bars3Icon className="h-6 w-6" aria-hidden="true" /> */}
             </button>
-          </div>
+          </div> */}
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
               <a
@@ -165,9 +175,7 @@ export default function Home() {
                 <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
               </ClerkLoading>
               <ClerkLoaded>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
+                <SignedIn>{/* <UserButton /> */}</SignedIn>
                 <SignedOut>
                   <SignInButton mode="modal" forceRedirectUrl={"/dashboard"}>
                     <button className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">
