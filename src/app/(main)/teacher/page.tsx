@@ -13,6 +13,8 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import ScenarioComponent from "./ScenarioComponent";
+
 function Dashboard() {
   const { isSignedIn, isLoaded, user } = useUser();
   const router = useRouter();
@@ -85,7 +87,7 @@ function Dashboard() {
                     : "text-gray-600 hover:text-gray-800"
                 }`}
               >
-                Questions
+                All scenarios
               </button>
               <button
                 onClick={() => setActiveTab("caseInfo")}
@@ -102,7 +104,8 @@ function Dashboard() {
           <div>
             {activeTab === "questions" && (
               <div>
-                <h2 className="text-xl font-semibold mb-4">Questions</h2>
+                <h2 className="text-xl font-semibold mb-4">Scenarios</h2>
+                <ScenarioComponent />
               </div>
             )}
             {activeTab === "caseInfo" && (

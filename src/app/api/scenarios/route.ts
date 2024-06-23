@@ -13,7 +13,8 @@ export async function GET(req: Request) {
 
   const query = { createdBy: userId };
   let success = true;
-  const scenario = await collection.find(query);
+  const scenario = await collection.find(query).toArray();
+
   if (scenario == null) {
     success = false;
   }
