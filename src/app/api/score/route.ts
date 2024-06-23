@@ -1,4 +1,5 @@
 import { HumeClient } from "hume";
+import { auth } from "@clerk/nextjs/server";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -6,6 +7,10 @@ const hume = new HumeClient({
   apiKey: process.env.HUME_API_KEY,
 });
 
+// Make a POST request to the /api/score endpoint
+// {
+//     "url": "https://hume-tutorials.s3.amazonaws.com/faces.zip"
+// }
 /* Get the score training session
    - Provide a url to the video recording
 
@@ -15,7 +20,11 @@ const hume = new HumeClient({
 */
 export async function POST(req: Request) {
   const { url } = await req.json();
-  console.log(url);
+  // console.log(url);
+
+  const { userId, getToken } = auth();
+  // create the
+  // console.log(userId);
 
   const job = await hume.expressionMeasurement.batch.startInferenceJob({
     models: {

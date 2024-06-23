@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ClerkLoaded,
   ClerkLoading,
@@ -9,7 +8,6 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { Button } from "@mui/material";
 
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -29,30 +27,6 @@ function Dashboard() {
     }
   }, [isLoaded, isSignedIn, router]);
 
-  const handleScore = async () => {
-    // const response = await (
-    //   await fetch("/api/score", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       url: "https://hume-tutorials.s3.amazonaws.com/faces.zip",
-    //     }),
-    //   })
-    // ).json();
-    const response = await (
-      await fetch("/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    ).json();
-
-    console.log("REPONSE: ", response);
-  };
-
   return (
     <div>
       {/* <ClerkLoading>
@@ -71,10 +45,7 @@ function Dashboard() {
         </SignedOut>
       </ClerkLoaded> */}
 
-      <div>This is the dashboard</div>
-      <Button variant="contained" color="primary" onClick={handleScore}>
-        Primary
-      </Button>
+      <div>Student View</div>
     </div>
   );
 }
