@@ -27,6 +27,8 @@ const SAMPLE_SCENARIO_1 = {
     q3_response:
       "Most colleges have counseling services, support groups, and academic advisors who can assist students in managing their stress and workload.",
   },
+  humePromptId: "828af814-a392-472a-b498-b4207d6d5d13",
+  humeConfigId: "9563ff7c-b5cb-4888-bc0a-2537fd747981"
 };
 
 const SAMPLE_SCENARIO_2 = {
@@ -54,6 +56,8 @@ const SAMPLE_SCENARIO_2 = {
     q3_response:
       "The employer can offer flexible working hours, promote a healthy work-life balance, and provide access to wellness programs.",
   },
+  humePromptId: "88804d53-eddb-4077-a0a3-455a356e9579",
+  humeConfigId: "65e6b47f-ee53-4d6e-9021-47567c37ae00"
 };
 
 const SAMPLE_SCENARIO_3 = {
