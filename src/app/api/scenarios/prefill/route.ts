@@ -86,6 +86,8 @@ const SAMPLE_SCENARIO_3 = {
     q3_response:
       "Rahul can join student groups, participate in cultural events, and reach out to fellow international students for support.",
   },
+  humePromptId: "a711ecf1-2f4e-4895-a903-2cee4165f28b",
+  humeConfigId: "c53574be-27db-48f8-af86-12e2044be676"
 };
 
 // Get all the training scenarios
