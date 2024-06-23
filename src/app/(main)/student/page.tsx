@@ -12,7 +12,7 @@ import {
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Grid, Paper, Button, Typography } from "@mui/material";
 
@@ -23,16 +23,46 @@ function Dashboard() {
 
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       router.push("/");
     }
+
+    const fetchScenarios = async () => {
+      const response = await fetch("/api/scenarios", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      if (data.success === false) {
+        setError("Failed to fetch scenarios");
+      } else {
+        setData(data.scenario);
+        console.log(data.scenario);
+      }
+      setLoading(false);
+    };
+
+    fetchScenarios();
   }, [isLoaded, isSignedIn, router]);
 
   const scenarios = ["Scenario 1", "Scenario 2"];
   const results = ["Prev-result 1", "result 2"];
 
-  return (
+  if (loading) {
+    return <div>Loading</div>;
+  }
+
+  return error ? (
+    <div>{error}</div>
+  ) : (
     <div>
       {/* <ClerkLoading>
         <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
@@ -52,10 +82,10 @@ function Dashboard() {
 
       <Grid container spacing={3} padding={3}>
         <Grid item xs={12}>
-          <Typography variant="h4">Dashboard</Typography>
+          <Typography variant="h4">Training Sessions</Typography>
         </Grid>
 
-        {scenarios.map((scenario, index) => (
+        {data.map((scenario, index) => (
           <Grid item xs={12} key={index}>
             <Paper
               elevation={3}
@@ -66,13 +96,22 @@ function Dashboard() {
                 padding: "16px",
               }}
             >
-              <Typography variant="h6">{scenario}</Typography>
+              <div className="flex flex-col">
+                <Typography variant="h6">{scenario.scenario_title}</Typography>
+                <Typography color="text.secondary">
+                  {scenario.scenario_hint}
+                </Typography>
+              </div>
               <Button variant="contained" color="primary">
-                Button
+                Start session
               </Button>
             </Paper>
           </Grid>
         ))}
+
+        <Grid item xs={12}>
+          <Typography variant="h4">Previous Results</Typography>
+        </Grid>
 
         {results.map((result, index) => (
           <Grid item xs={12} key={index}>
@@ -87,7 +126,7 @@ function Dashboard() {
             >
               <Typography variant="h6">{result}</Typography>
               <Button variant="contained" color="secondary">
-                Button
+                View result
               </Button>
             </Paper>
           </Grid>
