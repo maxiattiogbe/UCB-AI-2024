@@ -30,25 +30,26 @@ function Dashboard() {
   }, [isLoaded, isSignedIn, router]);
 
   const handleScore = async () => {
-    // const response = await (
-    //   await fetch("/api/score", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       url: "https://hume-tutorials.s3.amazonaws.com/faces.zip",
-    //     }),
-    //   })
-    // ).json();
+    console.log("Scoring...");
     const response = await (
-      await fetch("/api/users", {
-        method: "GET",
+      await fetch("/api/score/1", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          url: "https://hume-tutorials.s3.amazonaws.com/faces.zip",
+        }),
       })
     ).json();
+    // const response = await (
+    //   await fetch("/api/users", {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    // ).json();
 
     console.log("REPONSE: ", response);
   };
