@@ -84,7 +84,8 @@ function Dashboard() {
       })
     ).json();
 
-    router.push(response.joinUrl);
+    // router.push(response.joinUrl);
+    window.open(response.joinUrl, "_blank");
   };
 
   if (loading) {
