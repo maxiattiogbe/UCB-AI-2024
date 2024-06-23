@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { connectToDB } from "src/utils/db";
 import { ObjectId } from "mongodb";
+import { getFormattedPrompt, humeInstance } from "@/components/chat/constants";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -36,9 +37,33 @@ export async function POST(req: Request) {
   scenario.createdBy = userId;
   scenario.createdAt = new Date();
 
+  
+  // Integrate HUME
+  // 1. Create prompt ID
   const result = await collection.insertOne(scenario);
+  
+  const insertPromptResult = (await humeInstance.post("/evi/prompts", {
+    name: "prompt-" + result.insertedId.toString(),
+    text: getFormattedPrompt(scenario)
+  })).data
 
+  const insertConfigResult = (await humeInstance.post("/evi/configs", {
+    name: `config-${result.insertedId.toString()}`,
+    prompt: {
+      id: insertPromptResult.id,
+    },
+    voice: {
+      name: scenario.gender === "Male" ? "ITO" : "KORA"
+    }
+  })).data
+
+  await collection.updateOne({ _id: result.insertedId }, { $set: {
+    humePromptId: insertPromptResult.id,
+    humeConfigId: insertConfigResult.id
+  } })
+  
   client.close();
+
   return Response.json(result);
 }
 
