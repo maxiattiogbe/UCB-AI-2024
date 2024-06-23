@@ -24,6 +24,12 @@ function Dashboard() {
     }
   }, [isLoaded, isSignedIn, router]);
 
+  const handleSave = (event) => {
+    event.preventDefault();
+    // Add your save logic here
+    console.log("Save button clicked");
+  };
+
   return (
     <div>
       <div>
@@ -56,14 +62,47 @@ function Dashboard() {
             {activeTab === "questions" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Questions</h2>
-                {/* Your Questions content goes here */}
-                <p>Content for Questions tab...</p>
+                <form className="space-y-4" onSubmit={handleSave}>
+                  {[
+                    { label: "Question Title 1", id: "q1" },
+                    { label: "Question Title 2", id: "q2" },
+                    { label: "Question Title 3", id: "q3" },
+                  ].map((field) => (
+                    <div key={field.id} className="flex items-center space-x-4">
+                      <label htmlFor={field.id} className="w-32 text-right">
+                        {field.label}
+                      </label>
+                      <input
+                        type="text"
+                        id={field.id}
+                        className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  ))}
+                  <div className="flex items-start space-x-4">
+                    <label htmlFor="context" className="w-32 text-right">
+                      Context
+                    </label>
+                    <textarea
+                      id="context"
+                      className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
+                    ></textarea>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-indigo-500 text-white rounded-md"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
               </div>
             )}
             {activeTab === "caseInfo" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4">Case Info</h2>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSave}>
                   {[
                     { label: "Name", id: "name" },
                     { label: "Age", id: "age" },
@@ -83,6 +122,23 @@ function Dashboard() {
                       />
                     </div>
                   ))}
+                  <div className="flex items-start space-x-4">
+                    <label htmlFor="context" className="w-32 text-right">
+                      Context
+                    </label>
+                    <textarea
+                      id="context"
+                      className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
+                    ></textarea>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-indigo-500 text-white rounded-md"
+                    >
+                      Save
+                    </button>
+                  </div>
                 </form>
               </div>
             )}
