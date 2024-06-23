@@ -70,13 +70,13 @@ function FeedbackPage({ params }: { params: { sessionId: string } }) {
   return (
     <div>
       <div className="flex flex-col space-y-8">
-        <div>This is the dashboard</div>
+        {/* <div>This is the dashboard</div> */}
 
         {/* Please make sure replace humeData with Real data!! */}
         {/* <>{JSON.stringify(feedback)}</> */}
-        {loading && (
+        {loading && <div className="flex items-center justify-center" style={{height: "calc(100vh - 100px)"}} >
           <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-        )}
+        </div>}
         {!!feedback && (
           <FeedbackCard
             imgSrc={feedback.graph}

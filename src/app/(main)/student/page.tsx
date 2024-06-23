@@ -88,7 +88,9 @@ function Dashboard() {
   };
 
   if (loading) {
-    return <div>Loading</div>;
+    return <div className="flex items-center justify-center" style={{height: "calc(100vh - 100px)"}} >
+      <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+    </div>;
   }
 
   return error ? (
