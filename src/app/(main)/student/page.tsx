@@ -12,6 +12,7 @@ import {
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 import { Grid, Paper, Button, Typography } from "@mui/material";
@@ -68,8 +69,6 @@ function Dashboard() {
 
     fetchScenarios();
   }, [isLoaded, isSignedIn, router]);
-
-  const results = ["Prev-result 1", "result 2"];
 
   if (loading) {
     return <div>Loading</div>;
@@ -147,7 +146,12 @@ function Dashboard() {
                   Started: {new Date(result.startTime).toString()}
                 </Typography>
               </div>
-              <Button variant="contained" color="secondary">
+              <Button
+                variant="contained"
+                color="secondary"
+                LinkComponent={Link}
+                href={"/feedback/" + result._id}
+              >
                 View result
               </Button>
             </Paper>
