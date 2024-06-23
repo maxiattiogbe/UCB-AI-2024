@@ -36,11 +36,10 @@ export async function GET(
   const session = await collection.findOne(query);
   const url = session.recordingUrl;
   const processedRecording = session.processedRecording;
-  // if (processedRecording != null) {
-  //   console.log(processedRecording)
-  //   client.close();
-  //   return Response.json(processedRecording);
-  // }
+  if (processedRecording != null) {
+    client.close();
+    return Response.json(processedRecording);
+  }
 
   const job = await hume.expressionMeasurement.batch.startInferenceJob({
     models: {
