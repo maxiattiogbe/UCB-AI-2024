@@ -23,8 +23,6 @@ function FeedbackPage({ params }: { params: { sessionId: string } }) {
   const [feedback, setFeedback] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
-  const [realData, setRealData] = React.useState(null);
-
   // You can use the User for the info
 
   const router = useRouter();
@@ -58,11 +56,7 @@ function FeedbackPage({ params }: { params: { sessionId: string } }) {
       })
     ).json();
 
-    console.log("REPONSE: ", response);
-    console.log("HUME DATA: ", humeData);
-    setRealData(response);
-
-    await getFeedback(realData);
+    await getFeedback(JSON.stringify(response));
   };
 
   useEffect(() => {
