@@ -68,7 +68,7 @@ function Dashboard() {
   return (
     <div>
       <div>
-        <div className="w-full max-w-4xl px-4">
+        <div className="w-full px-4">
           <div className="mb-4 border-b border-gray-200">
             <nav className="flex space-x-4">
               <button

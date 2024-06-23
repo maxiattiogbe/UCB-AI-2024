@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
+import { Grid, Paper, Button, Typography } from "@mui/material";
+
 function Dashboard() {
   const { isSignedIn, isLoaded, user } = useUser();
 
@@ -26,6 +28,9 @@ function Dashboard() {
       router.push("/");
     }
   }, [isLoaded, isSignedIn, router]);
+
+  const scenarios = ["Scenario 1", "Scenario 2"];
+  const results = ["Prev-result 1", "result 2"];
 
   return (
     <div>
@@ -45,7 +50,49 @@ function Dashboard() {
         </SignedOut>
       </ClerkLoaded> */}
 
-      <div>Student View</div>
+      <Grid container spacing={3} padding={3}>
+        <Grid item xs={12}>
+          <Typography variant="h4">Dashboard</Typography>
+        </Grid>
+
+        {scenarios.map((scenario, index) => (
+          <Grid item xs={12} key={index}>
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "16px",
+              }}
+            >
+              <Typography variant="h6">{scenario}</Typography>
+              <Button variant="contained" color="primary">
+                Button
+              </Button>
+            </Paper>
+          </Grid>
+        ))}
+
+        {results.map((result, index) => (
+          <Grid item xs={12} key={index}>
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "16px",
+              }}
+            >
+              <Typography variant="h6">{result}</Typography>
+              <Button variant="contained" color="secondary">
+                Button
+              </Button>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 }

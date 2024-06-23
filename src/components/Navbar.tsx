@@ -43,7 +43,7 @@ export default function Example() {
                     alt="Your Company"
                   />
                 </div>
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
                   <Link href="/" passHref>
                     Dashboard
                   </Link>

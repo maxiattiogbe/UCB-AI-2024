@@ -33,7 +33,9 @@ export async function POST(
 
   const job = await hume.expressionMeasurement.batch.startInferenceJob({
     models: {
-      face: {},
+      burst: {},
+      prosody: {},
+      language: {},
     },
     urls: [url],
   });
@@ -44,7 +46,7 @@ export async function POST(
   const predictions = await hume.expressionMeasurement.batch.getJobPredictions(
     job.jobId,
   );
-  console.log(predictions);
+  console.log(predictions[0].results);
 
   return Response.json(predictions);
 }

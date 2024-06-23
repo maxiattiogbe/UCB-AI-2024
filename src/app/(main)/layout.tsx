@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="max-w-screen-xl mx-auto my-2 p-4">{children}</main>
     </div>
   );
 };
