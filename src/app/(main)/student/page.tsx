@@ -25,6 +25,7 @@ function Dashboard() {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [sessions, setSessions] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -47,13 +48,27 @@ function Dashboard() {
         setData(data.scenario);
         console.log(data.scenario);
       }
+
+      const sessions = await fetch("/api/sessions", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const sessionData = await sessions.json();
+      if (sessionData.success === false) {
+        setError("Failed to fetch scenarios");
+      } else {
+        setSessions(sessionData.sessions);
+        console.log(sessionData.sessions);
+      }
+
       setLoading(false);
     };
 
     fetchScenarios();
   }, [isLoaded, isSignedIn, router]);
 
-  const scenarios = ["Scenario 1", "Scenario 2"];
   const results = ["Prev-result 1", "result 2"];
 
   if (loading) {
@@ -113,7 +128,7 @@ function Dashboard() {
           <Typography variant="h4">Previous Results</Typography>
         </Grid>
 
-        {results.map((result, index) => (
+        {sessions.map((result, index) => (
           <Grid item xs={12} key={index}>
             <Paper
               elevation={3}
@@ -124,7 +139,14 @@ function Dashboard() {
                 padding: "16px",
               }}
             >
-              <Typography variant="h6">{result}</Typography>
+              <div className="flex flex-col">
+                <Typography variant="h6">
+                  Training session: {result.scenarioName}
+                </Typography>
+                <Typography color="text.secondary">
+                  Started: {new Date(result.startTime).toString()}
+                </Typography>
+              </div>
               <Button variant="contained" color="secondary">
                 View result
               </Button>
