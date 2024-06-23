@@ -1,5 +1,7 @@
 import { HumeClient } from "hume";
 import { auth } from "@clerk/nextjs/server";
+import { connectToDB } from "src/utils/db";
+import { ObjectId } from "mongodb";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -18,18 +20,27 @@ const hume = new HumeClient({
    if it does then return the already processed, if it doesn't then process it
    so probably change this back to a GET request
 */
-export async function POST(
+export async function GET(
   req: Request,
   { params }: { params: { slug: string } },
 ) {
-  const { url } = await req.json();
+  // const { userId, getToken } = auth();
   const slug = params.slug;
   console.log("SLUG: ", slug);
-  // console.log(url);
 
-  const { userId, getToken } = auth();
-  // create the
-  // console.log(userId);
+  const client = await connectToDB();
+  const database = client.db("HopeDB");
+  const collection = database.collection("Sessions");
+
+  const query = { _id: new ObjectId(slug) };
+  const session = await collection.findOne(query);
+  const url = session.recordingUrl;
+  const processedRecording = session.processedRecording;
+  // if (processedRecording != null) {
+  //   console.log(processedRecording)
+  //   client.close();
+  //   return Response.json(processedRecording);
+  // }
 
   const job = await hume.expressionMeasurement.batch.startInferenceJob({
     models: {
@@ -46,7 +57,11 @@ export async function POST(
   const predictions = await hume.expressionMeasurement.batch.getJobPredictions(
     job.jobId,
   );
-  console.log(predictions[0].results);
 
-  return Response.json(predictions);
+  // console.log(predictions[0].results);
+  session.processedRecording = predictions;
+  const res = await collection.replaceOne(query, session);
+
+  client.close();
+  return Response.json(session.processedRecording);
 }

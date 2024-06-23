@@ -151,6 +151,7 @@ function Dashboard() {
                 color="secondary"
                 LinkComponent={Link}
                 href={"/feedback/" + result._id}
+                disabled={!result.recordingUrl}
               >
                 View result
               </Button>
