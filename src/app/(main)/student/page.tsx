@@ -70,6 +70,23 @@ function Dashboard() {
     fetchScenarios();
   }, [isLoaded, isSignedIn, router]);
 
+  const handleNewSession = async (scenario) => {
+    const body = { scenario_id: scenario._id, user_id: user.id };
+
+    // now make the POST request:
+    const response = await (
+      await fetch("https://www.jiaruishan.com/api/initialize-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+    ).json();
+
+    router.push(response.joinUrl);
+  };
+
   if (loading) {
     return <div>Loading</div>;
   }
@@ -78,22 +95,6 @@ function Dashboard() {
     <div>{error}</div>
   ) : (
     <div>
-      {/* <ClerkLoading>
-        <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-      </ClerkLoading>
-      <ClerkLoaded>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <SignInButton mode="modal" forceRedirectUrl={"/dashboard"}>
-            <button className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">
-              Sign in
-            </button>
-          </SignInButton>
-        </SignedOut>
-      </ClerkLoaded> */}
-
       <Grid container spacing={3} padding={3}>
         <Grid item xs={12}>
           <Typography variant="h4">Training Sessions</Typography>
@@ -116,7 +117,11 @@ function Dashboard() {
                   {scenario.scenario_hint}
                 </Typography>
               </div>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleNewSession(scenario)}
+              >
                 Start session
               </Button>
             </Paper>
