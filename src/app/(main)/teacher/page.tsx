@@ -31,6 +31,8 @@ function Dashboard() {
     e.preventDefault();
 
     const caseInfo = {
+      scenario_title: e.target.scenario_title.value,
+      scenario_hint: e.target.scenario_hint.value,
       name: e.target.name.value,
       age: e.target.age.value,
       occupation: e.target.occupation.value,
@@ -102,8 +104,26 @@ function Dashboard() {
             )}
             {activeTab === "caseInfo" && (
               <div>
-                <h2 className="text-xl font-semibold mb-4">Case Info</h2>
                 <form className="space-y-4" onSubmit={handleSave}>
+                  <h2 className="text-xl font-semibold mb-4">Scenario Info</h2>
+                  {[
+                    { label: "Scenario Title", id: "scenario_title" },
+                    { label: "Scenario Hint", id: "scenario_hint" },
+                  ].map((field) => (
+                    <div key={field.id} className="flex items-center space-x-4">
+                      <label htmlFor={field.id} className="w-32 text-right">
+                        {field.label}
+                      </label>
+                      <input
+                        type="text"
+                        id={field.id}
+                        className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  ))}
+                  <h2 className="text-xl font-semibold mb-4">
+                    Person Case Info
+                  </h2>
                   {[
                     { label: "Name", id: "name" },
                     { label: "Age", id: "age" },

@@ -41,6 +41,8 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
     e.preventDefault();
     const newCaseInfo = {
       _id: caseInfo._id,
+      scenario_title: e.target.scenario_title.value,
+      scenario_hint: e.target.scenario_hint.value,
       name: e.target.name.value,
       age: e.target.age.value,
       occupation: e.target.occupation.value,
@@ -66,10 +68,16 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
       <Card>
         <CardContent>
           <Typography variant="h5" component="div">
-            {caseInfo.name}
+            {caseInfo.scenario_title}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Age: {caseInfo.age}
+          <Typography color="text.secondary">
+            {caseInfo.scenario_hint}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Name:</strong> {caseInfo.name}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Age:</strong> {caseInfo.age}
           </Typography>
           <Typography variant="body2">
             <strong>Occupation:</strong> {caseInfo.occupation}
@@ -86,7 +94,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
           <Typography variant="body2">
             <strong>Context:</strong> {caseInfo.context}
           </Typography>
-          <div className="questions">
+          <div className=" pt-2">
             {caseInfo.questions.q1 && (
               <Typography variant="body2">
                 <strong>Question 1:</strong> {caseInfo.questions.q1}
@@ -129,6 +137,23 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
         <DialogContent>
           <Box sx={style}>
             <form className="space-y-4" onSubmit={handleSave} id="edit-form-id">
+              <h2 className="text-xl font-semibold mb-4">Scenario Info</h2>
+              {[
+                { label: "Scenario Title", id: "scenario_title" },
+                { label: "Scenario Hint", id: "scenario_hint" },
+              ].map((field) => (
+                <div key={field.id} className="flex items-center space-x-4">
+                  <label htmlFor={field.id} className="w-32 text-right">
+                    {field.label}
+                  </label>
+                  <input
+                    type="text"
+                    id={field.id}
+                    className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
+                  />
+                </div>
+              ))}
+              <h2 className="text-xl font-semibold mb-4">Person Case Info</h2>
               {[
                 { label: "Name", id: "name" },
                 { label: "Age", id: "age" },
