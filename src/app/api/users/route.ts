@@ -1,18 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
-import { MongoClient } from "mongodb";
+import { connectToDB } from "src/utils/db";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
-
-export async function connectToDB() {
-  const uri = process.env.DB_CONN_STRING || "";
-  const client = new MongoClient(uri);
-  await client.connect();
-
-  await client.db("admin").command({ ping: 1 });
-  console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-  return client;
-}
 
 export async function GET(req: Request) {
   const client = await connectToDB();

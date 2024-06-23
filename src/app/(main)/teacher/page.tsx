@@ -17,6 +17,7 @@ function Dashboard() {
   const { isSignedIn, isLoaded, user } = useUser();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("questions");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -24,10 +25,50 @@ function Dashboard() {
     }
   }, [isLoaded, isSignedIn, router]);
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    // Add your save logic here
-    console.log("Save button clicked");
+
+    const caseInfo = {
+      name: e.target.name.value,
+      age: e.target.age.value,
+      occupation: e.target.occupation.value,
+      background: e.target.background.value,
+      actions: e.target.actions.value,
+      words: e.target.words.value,
+      context: e.target.context.value,
+      questions: [
+        {
+          title: e.target.q1.value,
+          response: e.target.q1_response.value,
+        },
+        {
+          title: e.target.q2.value,
+          response: e.target.q2_response.value,
+        },
+        {
+          title: e.target.q3.value,
+          response: e.target.q3_response.value,
+        },
+      ],
+    };
+
+    console.log(caseInfo);
+
+    // now make the POST request:
+    const response = await fetch("/api/scenarios", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(caseInfo),
+    });
+
+    if (response.ok) {
+      console.log("saved: ", await response.json());
+      e.target.reset();
+    } else {
+      setError("Failed to save case info");
+    }
   };
 
   return (
