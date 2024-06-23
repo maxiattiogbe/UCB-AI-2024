@@ -35,6 +35,7 @@ function Dashboard() {
       scenario_hint: e.target.scenario_hint.value,
       name: e.target.name.value,
       age: e.target.age.value,
+      gender: e.target.gender.value,
       occupation: e.target.occupation.value,
       background: e.target.background.value,
       actions: e.target.actions.value,
@@ -127,6 +128,7 @@ function Dashboard() {
                   {[
                     { label: "Name", id: "name" },
                     { label: "Age", id: "age" },
+                    { label: "Gender", id: "gender" },
                     { label: "Occupation", id: "occupation" },
                     { label: "Background", id: "background" },
                     { label: "Actions", id: "actions" },
