@@ -1,4 +1,5 @@
 import { HumeClient } from "hume";
+import { auth } from "@clerk/nextjs/server";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -19,7 +20,11 @@ const hume = new HumeClient({
 */
 export async function POST(req: Request) {
   const { url } = await req.json();
-  console.log(url);
+  // console.log(url);
+
+  const { userId, getToken } = auth();
+  // create the
+  // console.log(userId);
 
   const job = await hume.expressionMeasurement.batch.startInferenceJob({
     models: {
