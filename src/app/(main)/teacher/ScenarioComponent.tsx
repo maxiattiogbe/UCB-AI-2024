@@ -18,54 +18,193 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
-function CustomCard({ caseInfo, handleDelete }) {
+const style = {
+  width: "70%", // Making the dialog wider
+  maxWidth: "none",
+};
+
+function CustomCard({ caseInfo, handleDelete, handleEdit }) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    const caseInfo = {
+      name: e.target.name.value,
+      age: e.target.age.value,
+      occupation: e.target.occupation.value,
+      background: e.target.background.value,
+      actions: e.target.actions.value,
+      words: e.target.words.value,
+      context: e.target.context.value,
+      questions: {
+        q1: e.target.q1.value,
+        q1_response: e.target.q1_response.value,
+        q2: e.target.q2.value,
+        q2_response: e.target.q2_response.value,
+        q3: e.target.q3.value,
+        q3_response: e.target.q3_response.value,
+      },
+    };
+    console.log(caseInfo);
+  };
+
+  console.log(caseInfo);
+
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {caseInfo.name}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Age: {caseInfo.age}
-        </Typography>
-        <Typography variant="body2">
-          <strong>Occupation:</strong> {caseInfo.occupation}
-        </Typography>
-        <Typography variant="body2">
-          <strong>Background:</strong> {caseInfo.background}
-        </Typography>
-        <Typography variant="body2">
-          <strong>Actions:</strong> {caseInfo.actions}
-        </Typography>
-        <Typography variant="body2">
-          <strong>Words:</strong> {caseInfo.words}
-        </Typography>
-        <Typography variant="body2">
-          <strong>Context:</strong> {caseInfo.context}
-        </Typography>
-        <div className="questions">
-          {caseInfo.questions.map((question, index) => (
-            <Typography key={index} variant="body2">
-              <strong>Question {index + 1}:</strong> {question.title}
-              <br />
-              <strong>Response:</strong> {question.response}
-            </Typography>
-          ))}
-        </div>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Edit Scenario</Button>
-        <Button
-          size="small"
-          onClick={() => {
-            handleDelete(caseInfo);
-          }}
-        >
-          Delete Scenario
-        </Button>
-      </CardActions>
-    </Card>
+    <div>
+      <Card>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            {caseInfo.name}
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            Age: {caseInfo.age}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Occupation:</strong> {caseInfo.occupation}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Background:</strong> {caseInfo.background}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Actions:</strong> {caseInfo.actions}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Words:</strong> {caseInfo.words}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Context:</strong> {caseInfo.context}
+          </Typography>
+          <div className="questions">
+            {caseInfo.questions.q1 && (
+              <Typography variant="body2">
+                <strong>Question 1:</strong> {caseInfo.questions.q1}
+                <br />
+                <strong>Response:</strong> {caseInfo.questions.q1_response}
+              </Typography>
+            )}
+            {caseInfo.questions.q2 && (
+              <Typography variant="body2">
+                <strong>Question 2:</strong> {caseInfo.questions.q2}
+                <br />
+                <strong>Response:</strong> {caseInfo.questions.q2_response}
+              </Typography>
+            )}
+            {caseInfo.questions.q3 && (
+              <Typography variant="body2">
+                <strong>Question 3:</strong> {caseInfo.questions.q3}
+                <br />
+                <strong>Response:</strong> {caseInfo.questions.q3_response}
+              </Typography>
+            )}
+          </div>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={handleOpen}>
+            Edit Scenario
+          </Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDelete(caseInfo);
+            }}
+          >
+            Delete Scenario
+          </Button>
+        </CardActions>
+      </Card>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
+        <DialogTitle>Edit a scenario</DialogTitle>
+        <DialogContent>
+          <Box sx={style}>
+            <form className="space-y-4" onSubmit={handleSave}>
+              {[
+                { label: "Name", id: "name" },
+                { label: "Age", id: "age" },
+                { label: "Occupation", id: "occupation" },
+                { label: "Background", id: "background" },
+                { label: "Actions", id: "actions" },
+                { label: "Words", id: "words" },
+              ].map((field) => (
+                <div key={field.id} className="flex items-center space-x-4">
+                  <label htmlFor={field.id} className="w-32 text-right">
+                    {field.label}
+                  </label>
+                  <input
+                    type="text"
+                    id={field.id}
+                    value={caseInfo[field.id]}
+                    className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
+                  />
+                </div>
+              ))}
+              <div className="flex items-start space-x-4">
+                <label htmlFor="context" className="w-32 text-right">
+                  Context
+                </label>
+                <textarea
+                  id="context"
+                  className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
+                  value={caseInfo.context}
+                ></textarea>
+              </div>
+              <h2 className="text-xl font-semibold mb-4">Questions</h2>
+              {[
+                { label: "Question Title 1", id: "q1" },
+                { label: "Question Title 2", id: "q2" },
+                { label: "Question Title 3", id: "q3" },
+              ].map((field) => (
+                <div key={field.id}>
+                  <div className="flex items-center space-x-4">
+                    <label htmlFor={field.id} className="w-32 text-right">
+                      {field.label}
+                    </label>
+                    <input
+                      type="text"
+                      id={field.id}
+                      value={caseInfo["questions"][field.id]}
+                      className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="flex items-start space-x-4 pt-2">
+                    <label
+                      htmlFor={field.id + "_response"}
+                      className="w-32 text-right"
+                    >
+                      Correct Response
+                    </label>
+                    <textarea
+                      id={field.id + "_response"}
+                      value={caseInfo["questions"][field.id + "_response"]}
+                      className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
+                    ></textarea>
+                  </div>
+                </div>
+              ))}
+            </form>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button type="submit" form="form-id" color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
 
@@ -105,7 +244,6 @@ function ScenarioComponent() {
   }, [isLoaded, isSignedIn, router]);
 
   const handleDelete = async (caseInfo) => {
-    console.log(caseInfo);
     const response = await fetch("/api/scenarios", {
       method: "DELETE",
       headers: {
@@ -113,9 +251,25 @@ function ScenarioComponent() {
       },
       body: JSON.stringify({ _id: caseInfo._id }),
     });
+    const result = await response.json();
 
-    const dataCopy = data.filter((item) => item._id !== caseInfo._id);
-    setData(dataCopy);
+    if (result.deletedCount === 1) {
+      const dataCopy = data.filter((item) => item._id !== caseInfo._id);
+      setData(dataCopy);
+    }
+  };
+
+  const handleEdit = async (caseInfo) => {
+    const response = await fetch("/api/scenarios", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(caseInfo),
+    });
+
+    const result = await response.json();
+    console.log(result);
   };
 
   if (loading) {
@@ -131,6 +285,7 @@ function ScenarioComponent() {
           key={index}
           caseInfo={caseInfo}
           handleDelete={handleDelete}
+          handleEdit={handleEdit}
         />
       ))}
     </div>

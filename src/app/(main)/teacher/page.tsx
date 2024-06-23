@@ -38,20 +38,14 @@ function Dashboard() {
       actions: e.target.actions.value,
       words: e.target.words.value,
       context: e.target.context.value,
-      questions: [
-        {
-          title: e.target.q1.value,
-          response: e.target.q1_response.value,
-        },
-        {
-          title: e.target.q2.value,
-          response: e.target.q2_response.value,
-        },
-        {
-          title: e.target.q3.value,
-          response: e.target.q3_response.value,
-        },
-      ],
+      questions: {
+        q1: e.target.q1.value,
+        q1_response: e.target.q1_response.value,
+        q2: e.target.q2.value,
+        q2_response: e.target.q2_response.value,
+        q3: e.target.q3.value,
+        q3_response: e.target.q3_response.value,
+      },
     };
 
     console.log(caseInfo);
