@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { connectToDB } from "src/utils/db";
+import { ObjectId } from "mongodb";
 
 // export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -69,7 +70,9 @@ export async function DELETE(req: Request) {
 
   const scenario = await req.json();
 
-  const result = await collection.deleteOne({ _id: scenario._id });
+  const result = await collection.deleteOne({
+    _id: new ObjectId(scenario._id),
+  });
 
   client.close();
   return Response.json(result);

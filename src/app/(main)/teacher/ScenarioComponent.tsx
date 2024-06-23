@@ -19,7 +19,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-function CustomCard({ caseInfo }) {
+function CustomCard({ caseInfo, handleDelete }) {
   return (
     <Card>
       <CardContent>
@@ -56,6 +56,14 @@ function CustomCard({ caseInfo }) {
       </CardContent>
       <CardActions>
         <Button size="small">Edit Scenario</Button>
+        <Button
+          size="small"
+          onClick={() => {
+            handleDelete(caseInfo);
+          }}
+        >
+          Delete Scenario
+        </Button>
       </CardActions>
     </Card>
   );
@@ -96,6 +104,20 @@ function ScenarioComponent() {
     fetchScenarios();
   }, [isLoaded, isSignedIn, router]);
 
+  const handleDelete = async (caseInfo) => {
+    console.log(caseInfo);
+    const response = await fetch("/api/scenarios", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _id: caseInfo._id }),
+    });
+
+    const dataCopy = data.filter((item) => item._id !== caseInfo._id);
+    setData(dataCopy);
+  };
+
   if (loading) {
     return <div>Loading</div>;
   }
@@ -105,7 +127,11 @@ function ScenarioComponent() {
   ) : (
     <div>
       {data.map((caseInfo, index) => (
-        <CustomCard key={index} caseInfo={caseInfo} />
+        <CustomCard
+          key={index}
+          caseInfo={caseInfo}
+          handleDelete={handleDelete}
+        />
       ))}
     </div>
   );
