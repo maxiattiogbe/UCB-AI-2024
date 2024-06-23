@@ -39,7 +39,8 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    const caseInfo = {
+    const newCaseInfo = {
+      _id: caseInfo._id,
       name: e.target.name.value,
       age: e.target.age.value,
       occupation: e.target.occupation.value,
@@ -56,10 +57,9 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
         q3_response: e.target.q3_response.value,
       },
     };
-    console.log(caseInfo);
-  };
 
-  console.log(caseInfo);
+    handleEdit(newCaseInfo, handleClose);
+  };
 
   return (
     <div>
@@ -128,7 +128,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
         <DialogTitle>Edit a scenario</DialogTitle>
         <DialogContent>
           <Box sx={style}>
-            <form className="space-y-4" onSubmit={handleSave}>
+            <form className="space-y-4" onSubmit={handleSave} id="edit-form-id">
               {[
                 { label: "Name", id: "name" },
                 { label: "Age", id: "age" },
@@ -144,7 +144,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
                   <input
                     type="text"
                     id={field.id}
-                    value={caseInfo[field.id]}
+                    defaultValue={caseInfo[field.id]}
                     className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
                   />
                 </div>
@@ -156,7 +156,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
                 <textarea
                   id="context"
                   className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
-                  value={caseInfo.context}
+                  defaultValue={caseInfo.context}
                 ></textarea>
               </div>
               <h2 className="text-xl font-semibold mb-4">Questions</h2>
@@ -173,7 +173,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
                     <input
                       type="text"
                       id={field.id}
-                      value={caseInfo["questions"][field.id]}
+                      defaultValue={caseInfo["questions"][field.id]}
                       className="flex-1 py-2 px-3 border border-gray-300 rounded-md"
                     />
                   </div>
@@ -186,7 +186,9 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
                     </label>
                     <textarea
                       id={field.id + "_response"}
-                      value={caseInfo["questions"][field.id + "_response"]}
+                      defaultValue={
+                        caseInfo["questions"][field.id + "_response"]
+                      }
                       className="flex-1 py-2 px-3 border border-gray-300 rounded-md h-24"
                     ></textarea>
                   </div>
@@ -199,7 +201,7 @@ function CustomCard({ caseInfo, handleDelete, handleEdit }) {
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button type="submit" form="form-id" color="primary">
+          <Button type="submit" form="edit-form-id" color="primary">
             Save
           </Button>
         </DialogActions>
@@ -259,7 +261,7 @@ function ScenarioComponent() {
     }
   };
 
-  const handleEdit = async (caseInfo) => {
+  const handleEdit = async (caseInfo, handleClose) => {
     const response = await fetch("/api/scenarios", {
       method: "PUT",
       headers: {
@@ -269,7 +271,19 @@ function ScenarioComponent() {
     });
 
     const result = await response.json();
-    console.log(result);
+
+    // refetch all the data cuz im lazy
+    const newScenarios = await fetch("/api/scenarios", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await newScenarios.json();
+    setData(data.scenario);
+
+    handleClose();
   };
 
   if (loading) {

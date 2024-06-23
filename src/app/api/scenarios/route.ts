@@ -54,7 +54,10 @@ export async function PUT(req: Request) {
   scenario.createdBy = userId;
   scenario.createdAt = new Date();
 
-  const result = await collection.updateOne({ _id: scenario._id }, scenario);
+  const filter = { _id: new ObjectId(scenario._id) };
+  scenario._id = new ObjectId(scenario._id);
+
+  const result = await collection.replaceOne(filter, scenario);
 
   client.close();
   return Response.json(result);

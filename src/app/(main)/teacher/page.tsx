@@ -48,8 +48,6 @@ function Dashboard() {
       },
     };
 
-    console.log(caseInfo);
-
     // now make the POST request:
     const response = await fetch("/api/scenarios", {
       method: "POST",
